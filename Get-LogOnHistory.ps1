@@ -14,8 +14,8 @@ param (
     ,
     [Parameter()]
     [switch]
-    $IncludeLogOff,
-
+    $IncludeLogOff
+    ,
     [Parameter()]
     [ParameterType]
     $ComputerName = $env:COMPUTERNAME

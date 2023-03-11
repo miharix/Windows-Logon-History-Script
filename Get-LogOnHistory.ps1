@@ -22,18 +22,18 @@ param (
 )
 
 # Default event ID filter. 4624 = Logon event.
-$eventID = [System.Collections.ArrayList]@('4624')
-
-# If IncludeLogOff is specified, add event 4634 to the filter
-if ($IncludeLogOff) {
-    $null = $eventID.Add('4634')
-}
+# $eventID = [System.Collections.ArrayList]@('4624')
 
 # Base filter
 $filter = @{
     LogName      = 'Security'
-    ID           = $eventID
+    ID           = @('4624')
     ProviderName = 'Microsoft-Windows-Security-Auditing'
+}
+
+# If IncludeLogOff is specified, add event 4634 to the filter
+if ($IncludeLogOff) {
+    $filter['ID'] += '4634'
 }
 
 # If StartDate is specified

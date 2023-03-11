@@ -1,3 +1,4 @@
+# Get-LogOnHistory.ps1
 [CmdletBinding()]
 param (
     [Parameter()]
@@ -55,6 +56,20 @@ if ($Username) {
     }
 }
 
+# https://learn.microsoft.com/en-us/windows/security/threat-protection/auditing/basic-audit-logon-events#configure-this-audit-setting
+$logOnTypeTable = @{
+    '2'  = 'Interactive'
+    '3'  = 'Network'
+    '4'  = 'Batch'
+    '5'  = 'Service'
+    '6'  = 'Unlock'
+    '7'  = 'NetworkCleartext'
+    '8'  = 'NewCredentials'
+    '9'  = 'RemoteInteractive'
+    '10' = 'RemoteInteractive'
+    '11' = 'CachedInteractive'
+}
+
 try {
     $events = Get-WinEvent -FilterHashtable $filter -ErrorAction Stop -ComputerName $ComputerName
 
@@ -89,6 +104,7 @@ try {
                 }
             )
             ComputerName = $ComputerName
+            LogOnType    = $logOnTypeTable["$($event.Properties[8].value)"]
         }
     }
 }

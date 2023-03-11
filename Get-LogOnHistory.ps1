@@ -6,11 +6,11 @@ param (
     ,
     [Parameter()]
     [datetime]
-    $StartDate
+    $StartTime
     ,
     [Parameter()]
     [datetime]
-    $EndDate
+    $EndTime
     ,
     [Parameter()]
     [switch]
@@ -20,9 +20,6 @@ param (
     [string]
     $ComputerName = $env:COMPUTERNAME
 )
-
-# Default event ID filter. 4624 = Logon event.
-# $eventID = [System.Collections.ArrayList]@('4624')
 
 # Base filter
 $filter = @{
@@ -37,13 +34,13 @@ if ($IncludeLogOff) {
 }
 
 # If StartDate is specified
-if ($StartDate) {
-    $filter.Add('StartDate', $StartDate)
+if ($StartTime) {
+    $filter.Add('StartTime', $StartTime)
 }
 
 # If EndDate is specified
-if ($EndDate) {
-    $filter.Add('StartDate', $EndDate)
+if ($EndTime) {
+    $filter.Add('EndTime', $EndTime)
 }
 
 # Add username filter
